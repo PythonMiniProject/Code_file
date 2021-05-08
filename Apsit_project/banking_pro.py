@@ -10,7 +10,7 @@ root = Tk()
 root.title("BANKING PROJECT")
 root.geometry("600x600")
 
-#list of districts for combobox
+#=========================list of districts for COMBOBOX=====================================
 ls = ['Ahmednagar','Akola','Amravati','Aurangabad','Beed','Bhandara','Buldhana','Chandrapur','Dhule','Gadchiroli',
       'Gondia','Hingoli','Jalgaon','Jalna','Kolhapur','Latur','Mumbai City','Mumbai Suburban','Nagpur','Nanded',
       'Nandurbar','Nashik','Osmanabad','Palghar','Parbhani','Pune','Raigad','Ratnagiri','Sangli','Satara','Sindhudurg',
@@ -20,167 +20,106 @@ ls = ['Ahmednagar','Akola','Amravati','Aurangabad','Beed','Bhandara','Buldhana',
 def comboclick(event):
     pass
 
-#
-# count = 0
 def submit():
-        username = namevalue.get()
-        name = namevalue.get()
-        age = agevalue.get()
-        gender = gendervalue.get()
-        password = passwordvalue.get()
-        adharcard = adharcardvalue.get()
-        address = addressvalue.get()
-        phone = phonevalue.get()
-        email = emailvalue.get()
-        account_type = accountvalue.get()
-        date_var = datevalue.get()
-        month_var = monthvalue.get()
-        year_var = yearvalue.get()
-        all_accounts = os.listdir()
+    username = namevalue.get()
+    name = namevalue.get()
+    age = agevalue.get()
+    gender = gendervalue.get()
+    password = passwordvalue.get()
+    adharcard = adharcardvalue.get()
+    address = addressvalue.get()
+    phone = phonevalue.get()
+    email = emailvalue.get()
+    account_type = accountvalue.get()
+    date_var = datevalue.get()
+    month_var = monthvalue.get()
+    year_var = yearvalue.get()
+    users = os.chdir(r'C:\Users\Yash\Desktop\Python\Apsit_project\Users')
+    all_accounts = os.listdir()
+    exists = False
+    isValid = False
 
-        if username == "" or age == "" or gender == "" or password == "" or adharcard == "" or address==""\
-                or phone =="":
-            tmsg.showerror("Error","All feilds are required!")
-            return
+    if username == "" or age == "" or gender == "" or password == "" or adharcard == "" or address=="" or phone =="":
+        tmsg.showerror("Error","All feilds are required!")
+        return
 
-        for adharcard_check in all_accounts:
-            if adharcard_check == adharcard:
-                tmsg.showwarning("Alert","Account already exists!")
-                return
-            else:
-                new_file = open(name, "w")
-                new_file.write(username + '\n')
-                new_file.write(password + '\n')
-                new_file.write(age + '\n')
-                new_file.write(gender + '\n')
-                new_file.write(adharcard + '\n')
-                new_file.write(phone + '\n')
-                new_file.write(address + '\n')
-                new_file.write(email + '\n')
-                new_file.write(account_type + '\n')
-                new_file.write(date_var + '/' )
-                new_file.write(month_var +'/' )
-                new_file.write(year_var)
-                new_file.write('0')
-                new_file.close()
-                tmsg.showinfo("Congratulations!","Your account has been succesfully created")
-                break
+    print(adharcard)
+#======================Check if same user exists or not using adharcard as key validation ========================
+    for adharcard_check in all_accounts:
+        # print(adharcard_check)
+        if adharcard_check == adharcard:
+            exists = True
+            tmsg.showwarning("Alert","Account already exists!")
+            break
 
-#     global count
-# # we inintialized values of variables in from entrybox
-#     name = namevalue.get()
-#     address = addressvalue.get()
-#     phone = phonevalue.get()
-#     email = emailvalue.get()
-#     age = agevalue.get()
-#     adharcard = adharcardvalue.get()
-#     password = passwordvalue.get()
-#     gender = gendervalue.get()
-#     account_type = accountvalue.get()
-#     date_var = datevalue.get()
-#     month_var = monthvalue.get()
-#     year_var = yearvalue.get()
-#     all_accounts = os.listdir()
-#
-#
-#     #else:
-#         #with open("accounts.txt","a") as f:
-#             #f.write(f'name = {name}\n,address = {address}\n,phone = {phone}\n,email = {email}\n,age = {age}\n,'
-#              #       f'adharcard = {adharcard}\n,password = {password}\n,gender ={gender}\n,account type = {account_type},\n')
-#             #tmsg.showinfo("CONGRATULATIONS","YOUR ACCOUNT HAS SUCCESSFULLY CREATED")
-#
-#     # if  name.isalpha() or phone.isdigit() or address.isalnum() or age.isdigit() or adharcard.isdigit():
-#         # with open("accounts.txt","a") as f:
-#         #     f.write(f'name = {name},address = {address},phone = {phone},email = {email},'
-#         #             f'DOB = {datevalue.get()}/{monthvalue.get()}/{yearvalue.get()},age = {age},'
-#         #             f'adharcard = {adharcard},password = {password}\n,gender ={gender},account type = {account_type},\n')
-#         #     tmsg.showinfo("CONGRATULATIONS","YOUR ACCOUNT HAS SUCCESSFULLY CREATED")
-#     # else :
-#     #     tmsg.showerror("ERROR",'YOU HAVE GIVEN THE WRONG INPUT PLEASE CHECK AGAIN')
-#
-#     #validtions or exception handling for our code
-#
-#
-#     if name =="" or address == "" or phone == "" or email == "" or age == "" or adharcard == "" or password ==""\
-#             or gender == "" or account_type=="" or date_var == "" or month_var=="" or year_var =="":
-#             tmsg.showerror("Alert","NO Arguement are given plzz check again")
-#             # if name.isalpha() or phone.isdigit() or address.isalnum() or age.isdigit() or adharcard.isdigit():
-#             #     return True
-#             # else:
-#             #     tmsg.showwarning("Alert!", "Wrong arguements are given please check again!")
-#     elif len(phone) > 10:
-#         tmsg.showwarning("PHONE NO.LIMIT EXCEEDED",'Mobile number must be less than 10 digit no.')
-#     elif len(phone) < 10:
-#         tmsg.showwarning("INCOMPLETE NUMBER","Your mobile no. must be less than 10")
-#     elif len(adharcard) > 12:
-#         tmsg.showwarning("INCORRECT ADHAR-NO.","Your entered adharcard no. is incorrect please check again")
-#     elif len(adharcard) < 12:
-#         tmsg.showwarning("INCORRECT ADHAR-NO.","Your entered adharcard no. is incorrect please check again")
-#     elif len(date_var) < 2:
-#         tmsg.showwarning("INCORRECT DATE","Please check your date again")
-#     elif len(date_var) > 2:
-#         tmsg.showwarning("INCORRECT DATE","Please check your date again")
-#     elif len(month_var) > 2:
-#         tmsg.showwarning("INCORRECT MONTH","Please check your date again")
-#     elif len(date_var) < 2:
-#         tmsg.showwarning("INCORRECT DATE","Please check your date again")
-#     elif len(year_var) > 4:
-#         tmsg.showwarning("INCORRECT YEAR","Please check your year again")
-#     elif len(year_var) < 4:
-#         tmsg.showwarning("INCORRECT DATE","Please check your date again")
-#     else:
-#         with open("accounts.txt","a") as f:
-#             f.write(f'no of entries = {count} \n ,name = {name},address = {address},phone = {phone},email = {email},'
-#             f'DOB = {datevalue.get()}/{monthvalue.get()}/{yearvalue.get()},age = {age},'
-#             f'adharcard = {adharcard},password = {password}\n,gender ={gender},account type = {account_type},\n \n')
-#         tmsg.showinfo("CONGRATULATIONS","YOUR ACCOUNT HAS SUCCESSFULLY CREATED")
-#
-#     # #we are using adharcard value to differentiate our users..
-#     # for adharcard_check in all_accounts:
-#     #     if adharcard == adharcard_check:
-#     #         tmsg.showerror("ALERT-SAME ACCOUNT DETECTED","Account already exists")
-#     #         return
-#     #     elif len(phone) > 10:
-#     #         tmsg.showerror("PHONE NO.LIMIT EXCEEDED",'Mobile number must be less than 10 digit no.')
-#     #     elif len(phone) < 10:
-#     #         tmsg.showerror("INCOMPLETE NUMBER","Your mobile no. must be less than 10")
-#     #     elif len(adharcard) > 12:
-#     #         tmsg.showerror("INCORRECT ADHAR-NO.","Your entered adharcard no. is incorrect please check again")
-#     #     elif len(adharcard) < 12:
-#     #         tmsg.showerror("INCORRECT ADHAR-NO.","Your entered adharcard no. is incorrect please check again")
-#     #     elif len(date_var) < 2:
-#     #         tmsg.showerror("INCORRECT DATE","Please check your date again")
-#     #     elif len(date_var) > 2:
-#     #         tmsg.showerror("INCORRECT DATE","Please check your date again")
-#     #     elif len(month_var) > 2:
-#     #         tmsg.showerror("INCORRECT MONTH","Please check your date again")
-#     #     elif len(date_var) < 2:
-#     #         tmsg.showerror("INCORRECT DATE","Please check your date again")
-#     #     elif len(year_var) > 4:
-#     #         tmsg.showerror("INCORRECT YEAR","Please check your year again")
-#     #     elif len(year_var) < 4:
-#     #         tmsg.showerror("INCORRECT DATE","Please check your date again")
-#     #     else:
-#     #         with open("accounts.txt","a") as f:
-#     #             f.write(f'name = {name},address = {address},phone = {phone},email = {email},'
-#     #             f'DOB = {datevalue.get()}/{monthvalue.get()}/{yearvalue.get()},age = {age},'
-#     #             f'adharcard = {adharcard},password = {password}\n,gender ={gender},account type = {account_type},\n')
-#     #         tmsg.showinfo("CONGRATULATIONS","YOUR ACCOUNT HAS SUCCESSFULLY CREATED")
-#
-#     count +=1
+#===========================Calling functions for step by step execution===============================
 
-    # for adhar_check in all_accounts:
-    #     if adharcardvalue.get()== adhar_check:
-    #         tmsg.showerror("Error","User already exists")
-    #         return False
-    #     else:
-    #         with open("accounts.txt", "a") as f:
-    #             f.write(f'''no of entries = \n ,name = {namevalue.get()},address = {addressvalue.get()},phone = {phonevalue.get()},email = {emailvalue.get()},'
-    #                     f'DOB = {datevalue.get()}/{monthvalue.get()}/{yearvalue.get()},age = {agevalue.get()},'
-    #                     f'adharcard = {adharcardvalue.get()},password = {passwordvalue.get()}\n,gender ={gendervalue.get()},account type = {accountvalue.get()},\n \n''')
-    #         tmsg.showinfo("CONGRATULATIONS", "YOUR ACCOUNT HAS SUCCESSFULLY CREATED")
-    #         return True
-    #     break
+    isValid = checkPhoneNumber(phone) and checkName(username) and checkAdharcard(adharcard) and isValidEmail(email)
+    print(isValid)
+
+#===============================creating account if all conditons satisfies=========================
+    #======================we use file handling for the account creation========================
+    if exists == False and isValid == True:
+        new_file = open(adharcard, "w")
+        new_file.write(username + '\n')
+        new_file.write(password + '\n')
+        new_file.write(age + '\n')
+        new_file.write(gender + '\n')
+        new_file.write(adharcard + '\n')
+        new_file.write(phone + '\n')
+        new_file.write(address + '\n')
+        new_file.write(email + '\n')
+        new_file.write(account_type + '\n')
+        new_file.write(date_var + '/' )
+        new_file.write(month_var +'/' )
+        new_file.write(year_var)
+        new_file.write('0')
+        new_file.close()
+        tmsg.showinfo("Congratulations!","Your account has been succesfully created")
+    else:
+        tmsg.showerror("Error", "Please check input")
+
+#===================Function for the validation of name==================
+def checkName(user_name):
+    print("checkName ", user_name)
+    if user_name.isalpha():
+        return True
+    else:
+        tmsg.showwarning("Invalid Input!", "Please Enter the correct name")
+        print("checking name", user_name)
+#=====================Function for the validation of phone=================
+def checkPhoneNumber(ph):
+    print("checkPhoneNumber ", ph)
+    if ph.isnumeric() and len(ph) == 10:
+         return True
+    else:
+        tmsg.showwarning("Invalid Input!", "Please Enter the correct phone number")
+        print("Checking phone ", ph)
+        return False
+#================== Function for the validation of the adharcard=================
+def checkAdharcard(user_adhar):
+    print("checking adharcard number",user_adhar)
+    if user_adhar.isdigit() and len(user_adhar) == 12:
+         return True
+    else:
+        tmsg.showwarning("Alert!","The given adharcard number is Wrong Please Check Again!")
+        return False
+
+
+#============Function for the valiation of the email(We use regular expressions)===============
+def isValidEmail(user_email):
+    print("checking email",user_email)
+    if len(user_email) > 7:
+        if re.match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$",user_email) != None:
+            return True
+        else:
+            tmsg.showwarning("Alert!", "Invalid Email please check your Email again!")
+            return False
+    else:
+        tmsg.showwarning("Alert!", "Invalid Email please check your Email again!")
+        return False
+
+
 
 def log_in():
     window = Toplevel(root)
@@ -188,6 +127,95 @@ def log_in():
     #window = Tk()
     window.state('zoomed')
 
+# def logout():
+#     answer = tmsg.askyesno("Logout", "ARE YOU SURE YOU WANT TO LEAVE!")
+#     if answer == YES:
+#         account_dashboard.destroy()
+    def admin_login():
+
+#============================================Creating admin validations ==========================================
+        if temp_admin_id.get()=="" or temp_admin_password.get()=="":
+            tmsg.showerror("Error!","All fields are required.")
+
+            #=============================== Admin key access=====================================
+        elif temp_admin_id.get()=="admin" and temp_admin_password.get()=="password":
+            window.destroy()
+            admin_account = Toplevel(root)
+            admin_account.state("zoomed")
+            admin_account.title('Admin Page')
+
+            #===========admin login image==============
+            admin_account_dashboard_img = Label(admin_account, image=bg_img_admin)
+            admin_account_dashboard_img.pack()
+
+            admin_head = Label(admin_account, text="Welcome to our page 4", font="Impact 45 ",
+                           bg="yellow", fg="orange", relief=SUNKEN, borderwidth=8)
+            admin_head.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+            page5btn1 = Button(admin_account, text='User-Details', font='times 25', width=25, height=2).place(
+                x=25, y=160)
+            page5btn2 = Button(admin_account, text='Remove-User', font='times 25', width=25, height=2).place(x=25, y=260)
+            admin_logout_btn = Button(admin_account, text='Log-Out', font='times 25', width=25, height=2).place(x=25, y=360)
+            showvalues = Frame(admin_account, bg="azure", width=1020, height=900)
+            showvalues.place(x=500, y=100)
+
+        else:
+            tmsg.showerror("Error!","Invalid Username or Password")
+
+
+
+    def user_login():
+
+        global login_adharcard
+
+
+        users = os.chdir(r'C:\Users\Yash\Desktop\Python\Apsit_project\Users')
+        all_accounts = os.listdir()
+
+        login_adharcard = temp_user_adharcard.get()
+        login_password = temp_user_password.get()
+
+        for adhar_check in all_accounts:
+            if adhar_check == login_adharcard:
+                file = open(adhar_check, "r")
+                file_data = file.read()
+                file_data = file_data.split('\n')
+                password = file_data[1]
+
+
+                if login_adharcard == "" or login_password == "":
+                    print("lawde kam kia ki nai ")
+                    tmsg.showerror("Error", "All feids are requird")
+
+#=================creating new window to display account credentials=======================
+                elif login_password == password:
+                    window.destroy()
+                    account_dashboard = Toplevel(root)
+                    account_dashboard.state("zoomed")
+                    account_dashboard.title('Dashboard')
+
+#===================background image of our account window=======================================
+
+                    account_dashboard_bg_img = Label(account_dashboard, image=bg_img)
+                    account_dashboard_bg_img.pack()
+
+                    title1 = Label(account_dashboard, text="Welcome to our page 4", font="Impact 45 ",
+                                   bg="yellow", fg="orange",relief=SUNKEN,borderwidth=8)
+                    title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+                    page4btn1 = Button(account_dashboard, text='Personal-Details', font='times 25', width=25, height=2).place(x=25,y=160)
+                    page4btn2 = Button(account_dashboard, text='Deposit', font='times 25', width=25, height=2).place(x=25, y=260)
+                    page4btn3 = Button(account_dashboard, text='Withdraw', font='times 25', width=25, height=2).place(x=25, y=360)
+                    page4btn4 = Button(account_dashboard, text='Check-Balance', font='times 25', width=25, height=2).place(x=25,y=460)
+                    logout_btn = Button(account_dashboard, text='Log-Out', font='times 25', width=25, height=2).place(x=25, y=560)
+                    showvalues = Frame(account_dashboard, bg="azure", width=900, height=900)
+                    showvalues.place(x=500, y=100)
+
+
+                else:
+                    tmsg.showerror("Error", "Please Enter a Valid Password !")
+
+
+#==========================Show frame fuctions allows us to swap the frames in page form======================
+    #===========================tkraise is used to overlap one frame with another one==========================
     def show_frame(frame):
         frame.tkraise()
 
@@ -203,7 +231,7 @@ def log_in():
     for frame in (page1, page2, page3,page4):
         frame.grid(row=0, column=0, sticky='nsew')
 
-    # ==================page-1 code========================================
+# =================================page-1 code===============================================
 
     page1_bg_img = ImageTk.PhotoImage(file="bg2.jpg")
 
@@ -221,8 +249,10 @@ def log_in():
                         command=lambda: show_frame(page3))
     frame1_btn.place(x=600, y=380)
 
-    # ==================page-2 code (User login)======================================
+# ============================page-2 code (User login)======================================
+
     global bg_img,user_img,adhar_img,log_user_img,pass_lock_img,loginbutton_img,exitbutton_img,backbutton_page2_img
+
     # =============== Images =================
     bg_img = ImageTk.PhotoImage(file="account_bg.jpg")
     user_img = PhotoImage(file="user_image.png")
@@ -251,24 +281,24 @@ def log_in():
     user_lbl = Label(Login_frame, text="USERNAME:", image=log_user_img, compound=LEFT,
                      font='comicsans 15 bold', bg="white").grid(row=1, column=0, pady=5)
 
+    global temp_user_name, temp_user_adharcard, temp_user_password
 
     #===========================initailizing our variables ==========================
-    global txtuservar,txtadharvar,txtpassvar
-    txtuservar = StringVar()
-    txtadharvar = StringVar()
-    txtpassvar = StringVar()
-    txtuser = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = txtuservar, font="Lucida 20 bold").grid(row=1, column=2, padx=10)
+    temp_user_name = StringVar()
+    temp_user_adharcard = StringVar()
+    temp_user_password = StringVar()
+    txtuser = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = temp_user_name, font="Lucida 20 bold").grid(row=1, column=2, padx=10)
 
     adhar_lbl = Label(Login_frame, text="ADHARCARD:", image=adhar_img, compound=LEFT,
                       font='comicsans 15 bold', bg="white").grid(row=2, column=0, pady=5)
-    txtadhar = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = txtadharvar, font="Lucida 20 bold").grid(row=2, column=2, padx=10)
+    txtadhar = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = temp_user_adharcard, font="Lucida 20 bold").grid(row=2, column=2, padx=10)
 
     pass_lbl = Label(Login_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
                      font='comicsans 15 bold', bg="white").grid(row=3, column=0, pady=5)
-    txtpass = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = txtpassvar, font="Lucida 20 bold").grid(row=3, column=2, padx=10)
+    txtpass = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = temp_user_password, font="Lucida 20 bold").grid(row=3, column=2, padx=10)
 
     # ========================Buttons=========================================
-    login_btn = Button(Login_frame, image=loginbutton_img,command=lambda: show_frame(page4),borderwidth=0, background="white")
+    login_btn = Button(Login_frame, image=loginbutton_img,command=user_login,borderwidth=0, background="white")
     login_btn.grid(row=4, column=2, pady=40)
 
     exit_btn = Button(Login_frame, image=exitbutton_img, command=exit, borderwidth=0, background="white")
@@ -282,14 +312,16 @@ def log_in():
     # ==================page-3 code (Admin log-in)=========================================
 
     global admin_name_logo,admin_main_logo,wlc_admin,backbutton_img,admin_login_button,bg_img_admin
+
     # ====================images admin frame ===============================
-    admin_name_logo = ImageTk.PhotoImage(file="admin1.png")
     admin_main_logo = PhotoImage(file="adminuser.png")
-    wlc_admin = PhotoImage(file="welcome1.png")
     backbutton_img = PhotoImage(file="backimage_button.png")
     admin_login_button = ImageTk.PhotoImage(file="admin_login_button1.png")
 
     # ======================to set bg image for admin login page================
+
+    global temp_admin_id,temp_admin_password
+
     bg_img_admin = ImageTk.PhotoImage(file="account_bg.2.jpg")
     bg_admin = Label(page3, image=bg_img_admin)
     bg_admin.pack()
@@ -299,27 +331,30 @@ def log_in():
 
     # ================creating admin frame in page 3======================
     admin_frame = Frame(page3, bg='white')
-    admin_frame.place(x=520, y=110)
+    admin_frame.place(x=520, y=180)
 
     # =================Labels and Entry widgets for admin form=================
-    wlc_lbl = Label(admin_frame, image=wlc_admin, bg="white").grid(row=0, columnspan=4)
-    admin_logo = Label(admin_frame, image=admin_name_logo, bg="white").grid(row=1, columnspan=4)
+
     admin_user_logo = Label(admin_frame, image=admin_main_logo, bg="white").grid(row=2, columnspan=4)
+
+    # ====== text variables ========
+    temp_admin_id = StringVar()
+    temp_admin_password = StringVar()
 
     admin_lbl_id = Label(admin_frame, text="ADMIN-ID:", image=log_user_img, compound=LEFT,
                          font='comicsans 15 bold', bg="white").grid(row=3, column=0)
-    entry_admin_lbl_id = Entry(admin_frame, bd=5, relief=SUNKEN, font="Lucida 20 bold").grid(row=3, column=1, padx=7,
+    entry_admin_lbl_id = Entry(admin_frame, bd=5,textvariable = temp_admin_id, relief=SUNKEN, font="Lucida 20 bold").grid(row=3, column=1, padx=7,
                                                                                              pady=4)
 
     admin_lbl_password = Label(admin_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
                                font='comicsans 15 bold', bg="white").grid(row=4, column=0, pady=2)
-    entry_admin_lbl_password = Entry(admin_frame, bd=5, relief=SUNKEN, font="Lucida 20 bold").grid(row=4, column=1,
+    entry_admin_lbl_password = Entry(admin_frame, bd=5,textvariable = temp_admin_password, relief=SUNKEN, font="Lucida 20 bold").grid(row=4, column=1,
                                                                                                    padx=7)
 
     # ===================================Button for admin login==================
 
-    admin_button = Button(admin_frame, image=admin_login_button, borderwidth=0, background="white")
-    admin_button.grid(row=5, columnspan=4)
+    admin_button_login = Button(admin_frame, image=admin_login_button,command = admin_login, borderwidth=0, background="white")
+    admin_button_login.grid(row=5, columnspan=4)
 
     # =======================creating back button to swith through frames=============================
 
@@ -328,107 +363,30 @@ def log_in():
     frame3_btn.place(x=10, y=8)
 
     #=========================page 4 =====================================================
-
-    title1 = Label(page4, text="Welcome to our page 4", font="Impact 45 ", bg="yellow", fg="orange", relief=SUNKEN,
-                   borderwidth=8)
-    title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
-    page4btn1 = Button(page4, text='Personal-Details', font='times 25', width=25, height=2).place(x=25, y=160)
-    page4btn2 = Button(page4, text='Deposit', font='times 25', width=25, height=2).place(x=25, y=260)
-    page4btn3 = Button(page4, text='Withdraw', font='times 25', width=25, height=2).place(x=25, y=360)
-    page4btn4 = Button(page4, text='Check-Balance', font='times 25', width=25, height=2).place(x=25, y=460)
-
-    showvalues = Frame(page4,bg = "azure",width = 900 , height = 900)
-    showvalues.place(x = 500,y = 100)
-
-    def user_login():
-        all_accounts = os.listdir()
-
-        login_adharcard = adharcardvalue.get()
-        login_password = passwordvalue.get()
-
-        if txtuservar.get()=="" or txtadharvar.get() == "" or txtpassvar.get()=="":
-            tmsg.showerror("Alert","all feilds are required!")
+    # def logout():
+    #     answer = tmsg.askyesno("Logout","ARE YOU SURE YOU WANT TO LEAVE!")
+    #     if answer == YES:
+    #         account_dashboard.destroy()
 
 
-        for adhar_check in login_adharcard:
-            if adhar_check == login_adharcard:
-                file = open(login_adharcard, "r")
-                file_data = file.read()
-                file_data = file_data.split('\n')
-                password = file_data[1]
-                if login_password == password:
-                    Label(page4,text = "Dashboard",font = "Impact 45 ").place(x = 320 , y= 10)
-                    wlc = Label(page4,text = "welcome user " ,font = 'comicsans 12 green')
-                    wlc.place(x = 400, y = 300)
-
-
-                else:
-                    tmsg.showerror("Error","No account found please return!")
-
-
-
-
+    # page4_bgimg_label = Label(page4, image=bg_img)
+    # page4_bgimg_label.pack()
+    #
+    #
+    # title1 = Label(page4, text="Welcome to our page 4", font="Impact 45 ", bg="yellow", fg="orange", relief=SUNKEN,
+    #                borderwidth=8)
+    # title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+    # page4btn1 = Button(page4, text='Personal-Details', font='times 25', width=25, height=2).place(x=25, y=160)
+    # page4btn2 = Button(page4, text='Deposit', font='times 25', width=25, height=2).place(x=25, y=260)
+    # page4btn3 = Button(page4, text='Withdraw', font='times 25', width=25, height=2).place(x=25, y=360)
+    # page4btn4 = Button(page4, text='Check-Balance', font='times 25', width=25, height=2).place(x=25, y=460)
+    # logout_btn = Button(page4,text = 'Log-Out',font = 'times 25',command = logout, width = 25,height = 2).place(x= 25,y = 560)
+    # showvalues = Frame(page4,bg = "azure",width = 900 , height = 900)
+    # showvalues.place(x = 500,y = 100)
 
 
 
     show_frame(page1)
-
-
-
-
-#===================== Function for the validation of phone number ==============
-# def validate_phone(user_phone):
-#     if user_phone.isdigit():
-#         return True
-#     elif user_phone == "":
-#         return True
-#     else:
-#         tmsg.showwarning("Alert!","Only digits are allowed please check your phone number again")
-#         return False
-#===================    CALL BACK FUCTIONS ========================
-
-
-#
-# #================== Function for the validation of the adharcard=================
-# def validate_adhar(user_adhar):
-#     if user_adhar.isdigit():
-#         return True
-#     elif user_adhar == "":
-#         return True
-#     else:
-#         tmsg.showwarning("Alert!","Only digits are allowed please check your phone number again")
-#         return False
-#
-# #============Function for the valiation of the email(We use regular expressions)===============
-# def isValidEmail(user_email):
-#     if len(user_email) > 7:
-#         if re.match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$",user_email) !=None:
-#             return True
-#         else:
-#             tmsg.showwarning("Alert!","Invalid Email please check your email again")
-#             return False
-#     else:
-#         tmsg.showwarning("Alert!", "Invalid Email please check your email again")
-#         return False
-#
-# #============================Validations for all the fields ============================
-# def validateAllFields():
-#     if namevalue.get()=="" or addressvalue.get()==""or phonevalue.get()==""or agevalue.get()=="" or \
-#      adharcardvalue.get()=="" or passwordvalue.get()=="" or \
-#      datevalue.get()=="" or monthvalue.get()=="" or yearvalue.get()=="":
-#         tmsg.showerror("Error!","All fields are required")
-#     elif emailvalue.get()=="":
-#         status = isValidEmail(emailvalue.get())
-#         if (status):
-#             return True
-#     else:
-#         with open("accounts.txt", "a") as f:
-#             f.write(f'no of entries = \n ,name = {namevalue.get()},address = {addressvalue.get()},phone = {phonevalue.get()},email = {emailvalue.get()},'
-#                     f'DOB = {datevalue.get()}/{monthvalue.get()}/{yearvalue.get()},age = {agevalue.get()},'
-#                     f'adharcard = {adharcardvalue.get()},password = {passwordvalue.get()}\n,gender ={gendervalue.get()},account type = {accountvalue.get()},\n \n')
-#         tmsg.showinfo("CONGRATULATIONS", "YOUR ACCOUNT HAS SUCCESSFULLY CREATED")
-
-
 
 
 
@@ -438,17 +396,10 @@ def log_in():
 
 #================================================      MAIN GUI      ============================================
 def create_acc():
-#     def validate_name(user_name):
-#         if user_name.isalnum():
-#             return True
-#             print("Successful")
-#         else:
-#             tmsg.showwarning("Invalid Input!", "Please Enter the correct name")
-#             print("Unsucessful")
 
     global namevalue,addressvalue,phonevalue,emailvalue,agevalue,adharcardvalue,passwordvalue,gendervalue,accountvalue
     global datevalue,monthvalue,yearvalue
-    # We created new window using toplevel function
+    # ======================We created new window using toplevel function=====================
     #new window name is register_screen
     register_screen = Toplevel(root)
     register_screen.geometry("750x600")
@@ -461,14 +412,14 @@ def create_acc():
     re_frame2 = Frame(register_screen, width=700, height=600, highlightbackground='grey', highlightthickness=2,
                       relief=SUNKEN, bg="azure")
 
-    #combobox
+    #=====================================combobox============================
     mycombo = ttk.Combobox(register_screen,value = ls)
     mycombo.current(0)
     mycombo.bind("<<comboboxsselected>>",comboclick)
     mycombo.place(x = 252,y = 187)
 
 
-    #Labels
+    #=====================================Labels============================
     Label(re_frame2, text='NAME:', font='comicsans 10 bold', bg="azure").place(x= 40,y=10)
     Label(re_frame2, text='ADDRESS:', font='comicsans 10 bold', bg="azure").place(x=40, y=40)
     Label(re_frame2, text='DISTRICT:', font='comicsans 10 bold', bg="azure").place(x=40, y=70)
@@ -481,7 +432,7 @@ def create_acc():
     Label(re_frame2, text='PASSWORD:', font='comicsans 10 bold', bg="azure").place(x=40, y=280)
     Label(re_frame2, text='ACCOUNT-TYPE:', font='comicsans 10 bold', bg="azure").place(x=40, y=310)
 
-    #Entry box variables
+    #=====================================Entry box variables============================
     namevalue = StringVar()
     addressvalue = StringVar()
     phonevalue = StringVar()
@@ -495,7 +446,7 @@ def create_acc():
     monthvalue = StringVar()
     yearvalue = StringVar()
 
-    #Entry box
+    #=====================================Entry box============================
     Entry_name = Entry(re_frame2,textvariable =namevalue,font="comicsans 10 bold")
     Entry_name.place(x=250,y= 10)
     Entry_address = Entry (re_frame2,textvariable =addressvalue,font="comicsans 10 bold")
@@ -517,32 +468,16 @@ def create_acc():
     Entry_year = Entry (re_frame2,textvariable = yearvalue, font='Lucida 10 bold', width=4)
     Entry_year.place(x=300, y=160) #yy
 
-    #============== NAME VALIDATION FUNCTION================
-    # valid_name = register_screen.register(validate_name)
-    # Entry_name.config(validate = "key",validatecommand = (validate_name,'%P'))
-
-    #
-    # #================ PHONE VALIDATION FUNCTION================
-    # #validations (We have to create a callback function)
-    # valid_phone = register_screen.register(validate_phone)
-    #
-    # # %P  = passes the input value to callback function
-    # Entry_phone.config(validate = "key",validatecommand = (validate_phone,'%P'))
-    #
-    # #================ ADHARCARD VALIDATION FUNCTION==============
-    # valid_adhar = register_screen.register(validate_adhar)
-    # Entry_adhar.config(validate = "key",validatecommand = (validate_adhar,'%P'))
-
 
 
     gendervalue.set("male")
-    #Radio button for gender
+    #=====================================Radio button for gender============================
     r1 = Radiobutton(re_frame2,text = 'male', variable = gendervalue, value = "male", bg="azure")
     r2 = Radiobutton(re_frame2,text = 'female',variable = gendervalue,value = "female", bg="azure")
     r1.place(x = 249, y = 130)
     r2.place(x = 320 , y = 130)
 
-    #Radio button for account type
+    #=====================================Radio button for account type============================
     accountvalue.set("saving")
     r3 = Radiobutton(re_frame2,text = 'CURRENT', variable = accountvalue, value = "current", bg="azure")
     r4 = Radiobutton(re_frame2,text = 'SAVING',variable = accountvalue,value = "saving", bg="azure")
@@ -568,6 +503,8 @@ mframe1.pack(padx = 20,pady = 5,fill = 'both')
 
 #=====================changing Image of main window=========================
 
+
+#=====================Image swaping ===================================
 #image Tk used to import jpg images in tk window
 img1=ImageTk.PhotoImage(Image.open("img1.jpg"))
 img1 = Image.open("img1.jpg")
@@ -585,10 +522,6 @@ img3 = Image.open("img3.png")
 img3= img3.resize((400,300))
 img3 = ImageTk.PhotoImage(img3)
 
-img4=ImageTk.PhotoImage(Image.open("img4.jpg"))
-img4 = Image.open("img4.jpg")
-img4= img4.resize((400,300))
-img4 = ImageTk.PhotoImage(img4)
 #Create a label
 l=Label(root,font="bold")
 l.pack()
@@ -605,8 +538,6 @@ def move():#name anything but meaningful
         l.config(image=img2)
     elif x==3:
         l.config(image=img3)
-    elif x==4:
-        l.config(image=img4)
     #you can do it for thousands of images
     #now increase the count by one
     x+=1
@@ -615,10 +546,9 @@ def move():#name anything but meaningful
     root.after(2000,move)
 move()
 
-
+#=============================main window buttons ========================================
 Button(root,text = 'Create Account',bg = 'yellow green',command = create_acc).place(x = 100,y = 434)
 Button(root,text = 'Log-In',bg = 'yellow green',command = log_in).place(x = 230,y = 434)
-
 
 
 
