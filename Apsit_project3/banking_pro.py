@@ -28,8 +28,8 @@ def clearAll():
     agevalue.set("")
     adharcardvalue.set("")
     passwordvalue.set("")
-    gendervalue.set("")
-    accountvalue.set("")
+    gendervalue.set("male")
+    accountvalue.set("saving")
     datevalue.set("")
     monthvalue.set("")
     yearvalue.set("")
@@ -89,8 +89,8 @@ def submit():
         new_file.write(account_type + '\n')
         new_file.write(date_var + '/' )
         new_file.write(month_var +'/' )
-        new_file.write(year_var)
-        new_file.write('0')
+        new_file.write(year_var+'\n')
+        new_file.write('0.0')
         new_file.close()
         tmsg.showinfo("Congratulations!","Your account has been succesfully created")
     else:
@@ -158,6 +158,13 @@ def log_in():
     window.title("Log-In ACCOUNT")
     #window = Tk()
     window.state('zoomed')
+    
+    def logout():
+         answer = tmsg.askyesno("Logout", "ARE YOU SURE YOU WANT TO LEAVE!")
+         if answer == YES:
+             tmsg.showinfo("Visit us soon!","You are logging out ...")
+             root.destroy()
+             root.quit()
     
     def exitf():
         exit()
@@ -393,7 +400,7 @@ def log_in():
                     page4btn2 = Button(page4btn_frame, command=deposit,text='Deposit', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row =1 ,column = 0)
                     page4btn3 = Button(page4btn_frame, command=withdraw,text='Withdraw', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 2,column = 0)
                     page4btn4 = Button(page4btn_frame, command=showBalance,text='Check-Balance', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 3,column = 0)
-                    logout_btn = Button(page4btn_frame, text='Log-Out', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row =4 ,column = 0)
+                    logout_btn = Button(page4btn_frame, command=logout,text='Log-Out', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row =4 ,column = 0)
                     #showvalues = Frame(account_dashboard, bg="azure", width=1000, height=900,borderwidth=10)
                     #showvalues.place(x=520, y=100)
 
