@@ -20,6 +20,21 @@ ls = ['Ahmednagar','Akola','Amravati','Aurangabad','Beed','Bhandara','Buldhana',
 def comboclick(event):
     pass
 
+def clearAll():
+    namevalue.set("")
+    addressvalue.set("")
+    phonevalue.set("")
+    emailvalue.set("")
+    agevalue.set("")
+    adharcardvalue.set("")
+    passwordvalue.set("")
+    gendervalue.set("")
+    accountvalue.set("")
+    datevalue.set("")
+    monthvalue.set("")
+    yearvalue.set("")
+
+
 def submit():
     username = namevalue.get()
     name = namevalue.get()
@@ -52,10 +67,12 @@ def submit():
             tmsg.showwarning("Alert","Account already exists!")
             break
 
-#===========================Calling functions for step by step execution===============================
+#===========================Calling functions for step by step execution ===============================
 
-    isValid = checkPhoneNumber(phone) and checkName(username) and checkAdharcard(adharcard) and isValidEmail(email)
-    print(isValid)
+    isValid = checkPhoneNumber(phone) and checkName(username) and checkAdharcard(adharcard) and \
+              isValidEmail(email)
+
+
 
 #===============================creating account if all conditons satisfies=========================
     #======================we use file handling for the account creation========================
@@ -87,10 +104,25 @@ def checkName(user_name):
     else:
         tmsg.showwarning("Invalid Input!", "Please Enter the correct name")
         print("checking name", user_name)
+# #================================= Validation for age =====================
+#
+# def isValidAge(user_age):
+#     if len(user_age)>0 and len(user_age) < 4 and user_age.isdigit():
+#         v_age = int(user_age)
+#         print("v_age kya hai?",type(v_age))
+#         if v_age < 120 or v_age>0:
+#             tmsg.showwarning("Alert!","Invalid age input please check your age again")
+#             return True
+#         else:
+#             tmsg.showwarning("Alert","Please enter correct age value")
+#             return False
+#     else:
+#         tmsg.showwarning("Alert","Please enter correct age value")
+#         return False
 #=====================Function for the validation of phone=================
 def checkPhoneNumber(ph):
     print("checkPhoneNumber ", ph)
-    if ph.isnumeric() and len(ph) == 10:
+    if ph.isdigit() and len(ph) == 10:
          return True
     else:
         tmsg.showwarning("Invalid Input!", "Please Enter the correct phone number")
@@ -151,11 +183,12 @@ def log_in():
             admin_head = Label(admin_account, text="Welcome to our page 4", font="Impact 45 ",
                            bg="yellow", fg="orange", relief=SUNKEN, borderwidth=8)
             admin_head.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
-            page5btn1 = Button(admin_account, text='User-Details', font='times 25', width=25, height=2).place(
-                x=25, y=160)
-            page5btn2 = Button(admin_account, text='Remove-User', font='times 25', width=25, height=2).place(x=25, y=260)
-            admin_logout_btn = Button(admin_account, text='Log-Out', font='times 25', width=25, height=2).place(x=25, y=360)
-            showvalues = Frame(admin_account, bg="azure", width=1020, height=900)
+            admin_dashboard_frame_btn= Frame(admin_account,bg = "white",relief = SUNKEN,borderwidth=5)
+            admin_dashboard_frame_btn.place(x = 8 , y= 250)
+            page5btn1 = Button(admin_dashboard_frame_btn, text='User-Details', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 0,column = 0,pady = 1)
+            page5btn2 = Button(admin_dashboard_frame_btn, text='Remove-User', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 1,column = 0,pady = 1)
+            admin_logout_btn = Button(admin_dashboard_frame_btn, text='Log-Out', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 2,column = 0,pady = 1)
+            showvalues = Frame(admin_account, bg="gray98", width=1020, height=900)
             showvalues.place(x=500, y=100)
 
         else:
@@ -201,13 +234,15 @@ def log_in():
                     title1 = Label(account_dashboard, text="Welcome to our page 4", font="Impact 45 ",
                                    bg="yellow", fg="orange",relief=SUNKEN,borderwidth=8)
                     title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
-                    page4btn1 = Button(account_dashboard, text='Personal-Details', font='times 25', width=25, height=2).place(x=25,y=160)
-                    page4btn2 = Button(account_dashboard, text='Deposit', font='times 25', width=25, height=2).place(x=25, y=260)
-                    page4btn3 = Button(account_dashboard, text='Withdraw', font='times 25', width=25, height=2).place(x=25, y=360)
-                    page4btn4 = Button(account_dashboard, text='Check-Balance', font='times 25', width=25, height=2).place(x=25,y=460)
-                    logout_btn = Button(account_dashboard, text='Log-Out', font='times 25', width=25, height=2).place(x=25, y=560)
-                    showvalues = Frame(account_dashboard, bg="azure", width=900, height=900)
-                    showvalues.place(x=500, y=100)
+                    page4btn_frame = Frame(account_dashboard,bg = 'white',relief = SUNKEN,borderwidth=10)
+                    page4btn_frame.place(x = 8,y = 120)
+                    page4btn1 = Button(page4btn_frame, text='Personal-Details', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row =0 ,column = 0)
+                    page4btn2 = Button(page4btn_frame, text='Deposit', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row =1 ,column = 0)
+                    page4btn3 = Button(page4btn_frame, text='Withdraw', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 2,column = 0)
+                    page4btn4 = Button(page4btn_frame, text='Check-Balance', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row = 3,column = 0)
+                    logout_btn = Button(page4btn_frame, text='Log-Out', font='times 25', width=25, height=2,relief = "ridge", borderwidth=8).grid(row =4 ,column = 0)
+                    showvalues = Frame(account_dashboard, bg="azure", width=1000, height=900,borderwidth=10)
+                    showvalues.place(x=520, y=100)
 
 
                 else:
@@ -225,10 +260,9 @@ def log_in():
     page1 = Frame(window)
     page2 = Frame(window)
     page3 = Frame(window)
-    page4 = Frame(window)
 
     global page1_bg_img
-    for frame in (page1, page2, page3,page4):
+    for frame in (page1, page2, page3):
         frame.grid(row=0, column=0, sticky='nsew')
 
 # =================================page-1 code===============================================
@@ -236,18 +270,21 @@ def log_in():
     page1_bg_img = ImageTk.PhotoImage(file="bg2.jpg")
 
     bg_page1 = Label(page1, image=page1_bg_img)
-    bg_page1.pack()
+    bg_page1.place(x = 0 ,y = 0)
 
-    frame1_title = Label(page1, text='Selct the above options for respective log-in', font='times 35')
-    frame1_title.pack(fill='both', expand=True, anchor="nw")
+    frame1_title = Label(page1, text='Selct the above options for respective log-in',bg = "DarkOrange1", font='Impact 45')
+    frame1_title.place(x = 0,y = 0,relwidth = 1)
 
-    frame1_btn = Button(page1, text='User Log-In', font='times 25', width=30, height=2,
+    page1_btn_frame = Frame(page1, bg='white')
+    page1_btn_frame.place(x = 200,y = 200)
+
+    frame1_btn = Button(page1_btn_frame, text='User Log-In',relief = "ridge",borderwidth = 8, font='times 25', width=30, height=2,
                         command=lambda: show_frame(page2))
-    frame1_btn.place(x=600, y=250)
+    frame1_btn.grid(row = 0,column = 0)
 
-    frame1_btn = Button(page1, text='Admin Log-In', font='times 25', width=30, height=2,
+    frame1_btn = Button(page1_btn_frame, text='Admin Log-In',relief = "ridge",borderwidth = 8, font='times 25', width=30, height=2,
                         command=lambda: show_frame(page3))
-    frame1_btn.place(x=600, y=380)
+    frame1_btn.grid(row = 1,column = 0)
 
 # ============================page-2 code (User login)======================================
 
@@ -314,6 +351,7 @@ def log_in():
     global admin_name_logo,admin_main_logo,wlc_admin,backbutton_img,admin_login_button,bg_img_admin
 
     # ====================images admin frame ===============================
+    # bank_logo = PhotoImage(file="new_bank_symbol.png")
     admin_main_logo = PhotoImage(file="adminuser.png")
     backbutton_img = PhotoImage(file="backimage_button.png")
     admin_login_button = ImageTk.PhotoImage(file="admin_login_button1.png")
@@ -334,7 +372,7 @@ def log_in():
     admin_frame.place(x=520, y=180)
 
     # =================Labels and Entry widgets for admin form=================
-
+    # bank_logo_label = Label(admin_frame,image = bank_logo,bg = "white").grid ( row = 0,columnspan= 2)
     admin_user_logo = Label(admin_frame, image=admin_main_logo, bg="white").grid(row=2, columnspan=4)
 
     # ====== text variables ========
@@ -348,8 +386,7 @@ def log_in():
 
     admin_lbl_password = Label(admin_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
                                font='comicsans 15 bold', bg="white").grid(row=4, column=0, pady=2)
-    entry_admin_lbl_password = Entry(admin_frame, bd=5,textvariable = temp_admin_password, relief=SUNKEN, font="Lucida 20 bold").grid(row=4, column=1,
-                                                                                                   padx=7)
+    entry_admin_lbl_password = Entry(admin_frame, bd=5,textvariable = temp_admin_password, relief=SUNKEN, font="Lucida 20 bold").grid(row=4, column=1,padx=7)
 
     # ===================================Button for admin login==================
 
@@ -362,33 +399,8 @@ def log_in():
                         command=lambda: show_frame(page1))
     frame3_btn.place(x=10, y=8)
 
-    #=========================page 4 =====================================================
-    # def logout():
-    #     answer = tmsg.askyesno("Logout","ARE YOU SURE YOU WANT TO LEAVE!")
-    #     if answer == YES:
-    #         account_dashboard.destroy()
-
-
-    # page4_bgimg_label = Label(page4, image=bg_img)
-    # page4_bgimg_label.pack()
-    #
-    #
-    # title1 = Label(page4, text="Welcome to our page 4", font="Impact 45 ", bg="yellow", fg="orange", relief=SUNKEN,
-    #                borderwidth=8)
-    # title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
-    # page4btn1 = Button(page4, text='Personal-Details', font='times 25', width=25, height=2).place(x=25, y=160)
-    # page4btn2 = Button(page4, text='Deposit', font='times 25', width=25, height=2).place(x=25, y=260)
-    # page4btn3 = Button(page4, text='Withdraw', font='times 25', width=25, height=2).place(x=25, y=360)
-    # page4btn4 = Button(page4, text='Check-Balance', font='times 25', width=25, height=2).place(x=25, y=460)
-    # logout_btn = Button(page4,text = 'Log-Out',font = 'times 25',command = logout, width = 25,height = 2).place(x= 25,y = 560)
-    # showvalues = Frame(page4,bg = "azure",width = 900 , height = 900)
-    # showvalues.place(x = 500,y = 100)
-
-
 
     show_frame(page1)
-
-
 
 
 
@@ -489,7 +501,9 @@ def create_acc():
     #        width=20, command=submit).place(x=249, y=350)
 
     Button(re_frame2, text="SUBMIT",command = submit, font="comicsans 12",bg = "green",fg = "white",
-           width=20).place(x=249, y=350)
+           width=20,borderwidth = 5,relief = RAISED).place(x=249, y=350)
+    Button(re_frame2, text="RESET",command = clearAll, font="comicsans 12",bg = "green",fg = "white",
+           width=20,borderwidth = 5,relief = RAISED).place(x=249, y=390)
 
     re_frame2.pack(fill = 'both')
 
