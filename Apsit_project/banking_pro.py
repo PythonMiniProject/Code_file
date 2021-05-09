@@ -182,13 +182,13 @@ def deleteUser():
     ent1 = Entry(showvalues_admin, font='calibri 15',width = 55)
     ent1.place(x=230, y=250)
 
-    userinfo = ent1.get()
+
 
     def removeUser():
         del_account = tmsg.askyesno("Delete Account!","Are you sure you want to delete this account")
         if del_account==YES:
 
-            os.remove(userinfo)
+            os.remove(del_file_name)
 
             tmsg.showinfo("Done!","File removed successfully")
 
@@ -199,6 +199,7 @@ def deleteUser():
 
 
 def browsefunc():
+    global del_file_name
     del_file_name = filedialog.askopenfilename(initialdir = "C:\\Users\Yash\Desktop\Python\Apsit_project\\Users",
                                                title = "Delete a user ",filetypes = ((("All files"),'*'),))
     ent1.insert(END,del_file_name)
