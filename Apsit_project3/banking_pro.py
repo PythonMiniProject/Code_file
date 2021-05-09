@@ -1,0 +1,710 @@
+from tkinter import *
+import tkinter.messagebox as tmsg #to import message box
+from PIL import Image, ImageTk    # pillow library to vieww images
+import os
+import re
+from tkinter import ttk
+import shelve
+from tkinter.ttk import Combobox   #to import combobox
+root = Tk()
+root.title("BANKING PROJECT")
+root.geometry("600x600")
+
+#=========================list of districts for COMBOBOX=====================================
+ls = ['Ahmednagar','Akola','Amravati','Aurangabad','Beed','Bhandara','Buldhana','Chandrapur','Dhule','Gadchiroli',
+      'Gondia','Hingoli','Jalgaon','Jalna','Kolhapur','Latur','Mumbai City','Mumbai Suburban','Nagpur','Nanded',
+      'Nandurbar','Nashik','Osmanabad','Palghar','Parbhani','Pune','Raigad','Ratnagiri','Sangli','Satara','Sindhudurg',
+      'Solapur','Thane','Wardha','Washim','Yavatmal']
+
+
+#func for combobox
+def comboclick(event):
+    pass
+
+def submit():
+    username = namevalue.get()
+    name = namevalue.get()
+    age = agevalue.get()
+    gender = gendervalue.get()
+    password = passwordvalue.get()
+    adharcard = adharcardvalue.get()
+    address = addressvalue.get()
+    phone = phonevalue.get()
+    email = emailvalue.get()
+    account_type = accountvalue.get()
+    date_var = datevalue.get()
+    month_var = monthvalue.get()
+    year_var = yearvalue.get()
+    users = os.chdir(r'C:\Users\Rejoice\.spyder-py3\Apsit_project3\Users')
+    all_accounts = os.listdir()
+    exists = False
+    isValid = False
+
+    if username == "" or age == "" or gender == "" or password == "" or adharcard == "" or address=="" or phone =="":
+        tmsg.showerror("Error","All feilds are required!")
+        return
+
+    print(adharcard)
+#======================Check if same user exists or not using adharcard as key validation ========================
+    for adharcard_check in all_accounts:
+        # print(adharcard_check)
+        if adharcard_check == adharcard:
+            exists = True
+            tmsg.showwarning("Alert","Account already exists!")
+            break
+
+#===========================Calling functions for step by step execution===============================
+
+    isValid = checkPhoneNumber(phone) and checkName(username) and checkAdharcard(adharcard) and isValidEmail(email)
+    print(isValid)
+
+#===============================creating account if all conditons satisfies=========================
+    #======================we use file handling for the account creation========================
+    if exists == False and isValid == True:
+        new_file = open(adharcard, "w")
+        new_file.write(username + '\n')
+        new_file.write(password + '\n')
+        new_file.write(age + '\n')
+        new_file.write(gender + '\n')
+        new_file.write(adharcard + '\n')
+        new_file.write(phone + '\n')
+        new_file.write(address + '\n')
+        new_file.write(email + '\n')
+        new_file.write(account_type + '\n')
+        new_file.write(date_var + '/' )
+        new_file.write(month_var +'/' )
+        new_file.write(year_var+'\n')
+        new_file.write('0.0')
+        new_file.close()
+        tmsg.showinfo("Congratulations!","Your account has been succesfully created")
+    else:
+        tmsg.showerror("Error", "Please check input")
+
+#===================Function for the validation of name==================
+def checkName(user_name):
+    print("checkName ", user_name)
+    if user_name.isalpha():
+        return True
+    else:
+        tmsg.showwarning("Invalid Input!", "Please Enter the correct name")
+        print("checking name", user_name)
+#=====================Function for the validation of phone=================
+def checkPhoneNumber(ph):
+    print("checkPhoneNumber ", ph)
+    if ph.isnumeric() and len(ph) == 10:
+         return True
+    else:
+        tmsg.showwarning("Invalid Input!", "Please Enter the correct phone number")
+        print("Checking phone ", ph)
+        return False
+#================== Function for the validation of the adharcard=================
+def checkAdharcard(user_adhar):
+    print("checking adharcard number",user_adhar)
+    if user_adhar.isdigit() and len(user_adhar) == 12:
+         return True
+    else:
+        tmsg.showwarning("Alert!","The given adharcard number is Wrong Please Check Again!")
+        return False
+
+
+#============Function for the valiation of the email(We use regular expressions)===============
+def isValidEmail(user_email):
+    print("checking email",user_email)
+    if len(user_email) > 7:
+        if re.match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$",user_email) != None:
+            return True
+        else:
+            tmsg.showwarning("Alert!", "Invalid Email please check your Email again!")
+            return False
+    else:
+        tmsg.showwarning("Alert!", "Invalid Email please check your Email again!")
+        return False
+
+
+
+def log_in():
+    window = Toplevel(root)
+    window.title("Log-In ACCOUNT")
+    #window = Tk()
+    window.state('zoomed')
+    
+    def exitf():
+        exit()
+
+# def logout():
+#     answer = tmsg.askyesno("Logout", "ARE YOU SURE YOU WANT TO LEAVE!")
+#     if answer == YES:
+#         account_dashboard.destroy()
+    def admin_login():
+
+#============================================Creating admin validations ==========================================
+        if temp_admin_id.get()=="" or temp_admin_password.get()=="":
+            tmsg.showerror("Error!","All fields are required.")
+
+            #=============================== Admin key access=====================================
+        elif temp_admin_id.get()=="admin" and temp_admin_password.get()=="password":
+            window.destroy()
+            admin_account = Toplevel(root)
+            admin_account.state("zoomed")
+            admin_account.title('Admin Page')
+
+            #===========admin login image==============
+            admin_account_dashboard_img = Label(admin_account, image=bg_img_admin)
+            admin_account_dashboard_img.pack()
+
+            admin_head = Label(admin_account, text="Welcome to our page 4", font="Impact 45 ",
+                           bg="yellow", fg="orange", relief=SUNKEN, borderwidth=8)
+            admin_head.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+            page5btn1 = Button(admin_account, text='User-Details', font='times 25', width=25, height=2).place(
+                x=25, y=160)
+            page5btn2 = Button(admin_account, text='Remove-User', font='times 25', width=25, height=2).place(x=25, y=260)
+            admin_logout_btn = Button(admin_account, text='Log-Out', font='times 25', width=25, height=2).place(x=25, y=360)
+            showvalues = Frame(admin_account, bg="azure", width=1020, height=900)
+            showvalues.place(x=500, y=100)
+
+        else:
+            tmsg.showerror("Error!","Invalid Username or Password")
+
+
+
+    def user_login():
+
+        global login_adharcard
+
+
+        users = os.chdir(r'C:\Users\Rejoice\.spyder-py3\Apsit_project3\Users')
+        all_accounts = os.listdir()
+
+        login_adharcard = temp_user_adharcard.get()
+        login_password = temp_user_password.get()
+
+        for adhar_check in all_accounts:
+            if adhar_check == login_adharcard:
+                file = open(adhar_check, "r")
+                file_data = file.read()
+                file_data = file_data.split('\n')
+                password = file_data[1]
+                print(file_data)
+                #global amount
+                def user_details():
+                   showvalues = Frame(account_dashboard,width = 900 , height = 900)
+                   #login_name = txtuservar.get()
+                   #file = open(login_name, 'r+')
+                   #file_data = file.read()
+                   #details = file_data.split('\n')
+                   phoneInStars = file_data[5]
+                   aadharInStars = file_data[4]
+                   Label(showvalues,text = "Hello, " + file_data[0]+"!",font = 'Calibri 40 bold').place(x = 44,y = 50)
+                   Label(showvalues,text = "Phone No: *******"+phoneInStars[7]+phoneInStars[8]+phoneInStars[9],font = 'Calibri 20',).place(x = 44,y = 140)
+                   Label(showvalues,text = "Aadhar No: *********"+aadharInStars[9]+aadharInStars[10]+aadharInStars[11],font = 'Calibri 20',).place(x = 44,y = 170)
+                   Label(showvalues,text = "Address: "+file_data[6],font = 'Calibri 20',).place(x = 44,y = 200)
+                   showvalues.place(x = 500,y = 100)
+                   
+                def showBalance():
+                    showBalFrame = Frame(account_dashboard,width = 900 , height = 200)
+                    #login_name = txtuservar.get()
+                    #file = open(login_name, 'r+')
+                    #file_data = file.read()
+                    #details = file_data.split('\n')
+                    Label(showBalFrame,text = "Your Current Balance is: ₹ "+file_data[10],fg="green",font = 'Calibri 20').place(x = 44,y = 10)
+                    #showBalFrame.wm_attributes("-transparentcolor", 'grey')
+                    showBalFrame.place(x = 500,y = 500)
+                
+                def finish_deposit():
+                    if amount.get() == "":
+                        deposit_notif.config(text='Amount is required!',fg="red")
+                        return
+                    if float(amount.get()) <=0:
+                        deposit_notif.config(text='Negative currency is not accepted', fg='red')
+                        return
+                    #login_name = txtuservar.get()
+                    file_dep = open(adhar_check, 'r+')
+                    file_data_dep = file_dep.read()
+                    details = file_data_dep.split('\n')
+                    current_balance = details[10]
+                    updated_balance = current_balance
+                    updated_balance = float(updated_balance) + float(amount.get())
+                    file_data_dep       = file_data_dep.replace(current_balance, str(updated_balance))
+                    file_dep.seek(0)
+                    file_dep.truncate(0)
+                    file_dep.write(file_data_dep)
+                    file_dep.close()                
+                    current_balance_label.config(text="Current Balance : ₹ "+str(updated_balance),fg="green",font = 'Calibri 12 bold')
+                    deposit_notif.config(text='Balance Updated', fg='green')
+                
+                def deposit():
+                #Vars
+                    global amount
+                    global details_balance
+                    global deposit_notif
+                    global current_balance_label
+                    #login_name = txtuservar.get()
+                    amount = StringVar()
+                    #file   = open(login_name, "r")
+                    #file_data = file.read()
+                    #user_details = file_data.split('\n')
+                    #print(user_details)
+                    details_balance = file_data[10]
+                    #Deposit Screen
+                    deposit_screen = Toplevel(root)
+                    deposit_screen.title('DEPOSIT')
+                    deposit_screen_width = 500
+                    deposit_screen_height = 300
+                    deposit_screen.geometry(f'{deposit_screen_width}x{deposit_screen_height}+{280}+{250}')
+                    
+                    deposit_frame1 = Frame(deposit_screen,width = 500,height = 100,highlightbackground = 'grey',highlightthickness = 2,relief = SUNKEN,bg = "CadetBlue1")
+                    Label(deposit_frame1,text = 'Get Your ONLINE-BANK Account in a few minutes with GROW-MORE.\n',font = 'comicsans 10 bold',bg = "CadetBlue1").place(x = 40,y = 20)
+                    Label(deposit_frame1,text = 'With Grow-more we provide our best services and safety Banking for you and your family.',font = ' comicsans 8 italic',bg = "CadetBlue1").place(x = 40 , y = 60)
+                    deposit_frame1.pack(pady = 2,fill = X)
+                    deposit_frame2 = Frame(deposit_screen, width=500, height=1000, highlightbackground='grey', highlightthickness=2, relief=SUNKEN, bg="azure")
+                    #Label        
+                    Label(deposit_frame2, text="Deposit", font=('Calibri',15,'bold'),bg="azure").place(x=220,y=10)
+                    current_balance_label = Label(deposit_frame2, text="Current Balance :  ₹ "+details_balance, font=('Calibri',12),bg="azure")
+                    current_balance_label.place(x=50,y=50)
+                    Label(deposit_frame2, text="Amount : ", font=('Calibri',12),bg="azure").place(x=50,y=80)
+                    deposit_notif = Label(deposit_frame2,font=('Calibri',12),bg="azure")
+                    deposit_notif.place(x=50,y=140)
+                    #Entry
+                    Entry(deposit_frame2, textvariable = amount).place(x=120,y=80)
+                    #Button
+                    Button(deposit_frame2,text="FINISH",command = finish_deposit, font="comicsans 12",bg = "green",fg = "white", width=20).place(x=50,y=110)
+                    deposit_frame2.pack(fill='both')
+                
+                def finish_withdraw():
+                    if withdraw_amount.get() == "":
+                        withdraw_notif.config(text='Amount is required!',fg="red")
+                        return
+                    if float(withdraw_amount.get()) <=0:
+                        withdraw_notif.config(text='Negative currency is not accepted', fg='red')
+                        return
+                    
+                    #login_name = txtuservar.get()
+                    file_with = open(adhar_check, 'r+')
+                    file_data_with = file_with.read()
+                    details_with = file_data_with.split('\n')
+                    current_balance = details_with[10]
+                
+                    if float(withdraw_amount.get()) >float(current_balance):
+                        withdraw_notif.config(text='Insufficient Balance!', fg='red')
+                        return
+                
+                    updated_balance = current_balance
+                    updated_balance = float(updated_balance) - float(withdraw_amount.get())
+                    file_data_with       = file_data_with.replace(current_balance, str(updated_balance))
+                    file_with.seek(0)
+                    file_with.truncate(0)
+                    file_with.write(file_data_with)
+                    file_with.close()
+            
+                    current_balance_label.config(text="Current Balance : ₹ "+str(updated_balance),fg="green",font = 'Calibri 12 bold')
+                    withdraw_notif.config(text='Balance Updated', fg='green')
+                
+                def withdraw():
+                 #Vars
+                    global amount
+                    global withdraw_amount
+                    global withdraw_notif
+                    global current_balance_label
+                    withdraw_amount = StringVar()
+                    #login_name = txtuservar.get()
+                    #file   = open(login_name, "r")
+                    #file_data = file.read()
+                    #user_details = file_data.split('\n')
+                    details_balance = file_data[10]
+                    #Deposit Screen
+                    withdraw_screen = Toplevel(root)
+                    withdraw_screen.title('Withdraw')
+                    withdraw_screen_width = 500
+                    withdraw_screen_height = 300
+                    withdraw_screen.geometry(f'{withdraw_screen_width}x{withdraw_screen_height}+{280}+{250}')
+                    #Label
+                    withdraw_frame1 = Frame(withdraw_screen,width = 500,height = 100,highlightbackground = 'grey',highlightthickness = 2,relief = SUNKEN,bg = "CadetBlue1")
+                    Label(withdraw_frame1,text = 'Get Your ONLINE-BANK Account in a few minutes with GROW-MORE.\n',font = 'comicsans 10 bold',bg = "CadetBlue1").place(x = 40,y = 20)
+                    Label(withdraw_frame1,text = 'With Grow-more we provide our best services and safety Banking for you and your family.',font = ' comicsans 8 italic',bg = "CadetBlue1").place(x = 40 , y = 60)
+                    withdraw_frame1.pack(pady = 2,fill = X)
+                    withdraw_frame2 = Frame(withdraw_screen, width=500, height=1000, highlightbackground='grey', highlightthickness=2, relief=SUNKEN, bg="azure")
+                    #Label        
+                    Label(withdraw_frame2, text="Withdraw", font=('Calibri',15,'bold'),bg="azure").place(x=220,y=10)
+                    current_balance_label = Label(withdraw_frame2, text="Current Balance :  ₹ "+details_balance, font=('Calibri',12),bg="azure")
+                    current_balance_label.place(x=50,y=50)
+                    Label(withdraw_frame2, text="Amount : ", font=('Calibri',12),bg="azure").place(x=50,y=80)
+                    withdraw_notif = Label(withdraw_frame2,font=('Calibri',12),bg="azure")
+                    withdraw_notif.place(x=50,y=140)
+                    #Entry
+                    Entry(withdraw_frame2, textvariable=withdraw_amount).place(x=120,y=80)
+                    #Button
+                    Button(withdraw_frame2,text="FINISH",command = finish_withdraw, font="comicsans 12",bg = "green",fg = "white", width=20).place(x=50,y=110)
+                    withdraw_frame2.pack(fill='both')
+                
+                if login_adharcard == "" or login_password == "":
+                    print("lawde kam kia ki nai ")
+                    tmsg.showerror("Error", "All feids are requird")
+
+#=================creating new window to display account credentials=======================
+                elif login_password == password:
+                    window.destroy()
+                    account_dashboard = Toplevel(root)
+                    account_dashboard.state("zoomed")
+                    account_dashboard.title('Dashboard')
+
+#===================background image of our account window=======================================
+
+                    account_dashboard_bg_img = Label(account_dashboard, image=bg_img)
+                    account_dashboard_bg_img.pack()
+
+                    title1 = Label(account_dashboard, text="Welcome to our page 4", font="Impact 45 ",
+                                   bg="yellow", fg="orange",relief=SUNKEN,borderwidth=8)
+                    title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+                    page4btn1 = Button(account_dashboard, text='Personal-Details', command=user_details,font='times 25', width=25, height=2).place(x=25,y=160)
+                    page4btn2 = Button(account_dashboard, text='Deposit', command=deposit,font='times 25', width=25, height=2).place(x=25, y=260)
+                    page4btn3 = Button(account_dashboard, text='Withdraw',command=withdraw, font='times 25', width=25, height=2).place(x=25, y=360)
+                    page4btn4 = Button(account_dashboard, text='Check-Balance',command=showBalance, font='times 25', width=25, height=2).place(x=25,y=460)
+                    logout_btn = Button(account_dashboard, text='Log-Out', font='times 25', width=25, height=2).place(x=25, y=560)
+                    #showvalues = Frame(account_dashboard, bg="azure", width=900, height=900)
+                    #showvalues.place(x=500, y=100)
+
+
+                else:
+                    tmsg.showerror("Error", "Please Enter a Valid Password !")
+
+
+#==========================Show frame fuctions allows us to swap the frames in page form======================
+    #===========================tkraise is used to overlap one frame with another one==========================
+    def show_frame(frame):
+        frame.tkraise()
+
+    window.rowconfigure(0, weight=1)
+    window.columnconfigure(0, weight=1)
+
+    page1 = Frame(window)
+    page2 = Frame(window)
+    page3 = Frame(window)
+    page4 = Frame(window)
+
+    global page1_bg_img
+    for frame in (page1, page2, page3,page4):
+        frame.grid(row=0, column=0, sticky='nsew')
+
+# =================================page-1 code===============================================
+
+    page1_bg_img = ImageTk.PhotoImage(file="bg2.jpg")
+
+    bg_page1 = Label(page1, image=page1_bg_img)
+    bg_page1.pack()
+
+    frame1_title = Label(page1, text='Selct the above options for respective log-in', font='times 35')
+    frame1_title.pack(fill='both', expand=True, anchor="nw")
+
+    frame1_btn = Button(page1, text='User Log-In', font='times 25', width=30, height=2,
+                        command=lambda: show_frame(page2))
+    frame1_btn.place(x=600, y=250)
+
+    frame1_btn = Button(page1, text='Admin Log-In', font='times 25', width=30, height=2,
+                        command=lambda: show_frame(page3))
+    frame1_btn.place(x=600, y=380)
+
+# ============================page-2 code (User login)======================================
+
+    global bg_img,user_img,adhar_img,log_user_img,pass_lock_img,loginbutton_img,exitbutton_img,backbutton_page2_img
+
+    # =============== Images =================
+    bg_img = ImageTk.PhotoImage(file="account_bg.jpg")
+    user_img = PhotoImage(file="user_image.png")
+    adhar_img = PhotoImage(file="adhar_card.png")
+    log_user_img = PhotoImage(file="man_user.png")
+    pass_lock_img = PhotoImage(file="pass_lock.png")
+    loginbutton_img = PhotoImage(file="login.png")
+    exitbutton_img = PhotoImage(file="exit.png")
+    backbutton_page2_img = PhotoImage(file="backimage_button.png")
+
+    # ===============to set bg image user login page ==================
+    bg = Label(page2, image=bg_img)
+    bg.pack()
+    title = Label(page2, text="User Log-In", font="Impact 45 ", bg="yellow", relief=SUNKEN, borderwidth=8)
+    title.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+
+    # =============login frame============================
+    Login_frame = Frame(page2, bg='white')
+    Login_frame.place(x=500, y=145)
+
+    # user logo on top image in user login form
+    user_logo = Label(Login_frame, image=user_img, borderwidth=0).grid(row=0, columnspan=4, pady=40)
+
+    # ===============================Labels and text==================================
+    # adding user_image to the user name
+    user_lbl = Label(Login_frame, text="USERNAME:", image=log_user_img, compound=LEFT,
+                     font='comicsans 15 bold', bg="white").grid(row=1, column=0, pady=5)
+
+    global temp_user_name, temp_user_adharcard, temp_user_password
+
+    #===========================initailizing our variables ==========================
+    temp_user_name = StringVar()
+    temp_user_adharcard = StringVar()
+    temp_user_password = StringVar()
+    txtuser = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = temp_user_name, font="Lucida 20 bold").grid(row=1, column=2, padx=10)
+
+    adhar_lbl = Label(Login_frame, text="ADHARCARD:", image=adhar_img, compound=LEFT,
+                      font='comicsans 15 bold', bg="white").grid(row=2, column=0, pady=5)
+    txtadhar = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = temp_user_adharcard, font="Lucida 20 bold").grid(row=2, column=2, padx=10)
+
+    pass_lbl = Label(Login_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
+                     font='comicsans 15 bold', bg="white").grid(row=3, column=0, pady=5)
+    txtpass = Entry(Login_frame, bd=5, relief=SUNKEN,textvariable = temp_user_password, font="Lucida 20 bold").grid(row=3, column=2, padx=10)
+
+    # ========================Buttons=========================================
+    login_btn = Button(Login_frame, image=loginbutton_img,command=user_login,borderwidth=0, background="white")
+    login_btn.grid(row=4, column=2, pady=40)
+
+    exit_btn = Button(Login_frame, image=exitbutton_img, command=exitf, borderwidth=0, background="white")
+    exit_btn.grid(row=4, column=0, pady=40)
+
+    # =======================creating back button to swith through frames=============================
+    frame2_btn = Button(page2, image=backbutton_page2_img, borderwidth=0, background="yellow",
+                        command=lambda: show_frame(page1))
+    frame2_btn.place(x=10, y=8)
+
+    # ==================page-3 code (Admin log-in)=========================================
+
+    global admin_name_logo,admin_main_logo,wlc_admin,backbutton_img,admin_login_button,bg_img_admin
+
+    # ====================images admin frame ===============================
+    admin_main_logo = PhotoImage(file="adminuser.png")
+    backbutton_img = PhotoImage(file="backimage_button.png")
+    admin_login_button = ImageTk.PhotoImage(file="admin_login_button1.png")
+
+    # ======================to set bg image for admin login page================
+
+    global temp_admin_id,temp_admin_password
+
+    bg_img_admin = ImageTk.PhotoImage(file="account_bg.2.jpg")
+    bg_admin = Label(page3, image=bg_img_admin)
+    bg_admin.pack()
+    admin_title = Label(page3, text="Admin Log-In", font="Impact 45 ", bg="yellow", relief=SUNKEN,
+                        borderwidth=8)
+    admin_title.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+
+    # ================creating admin frame in page 3======================
+    admin_frame = Frame(page3, bg='white')
+    admin_frame.place(x=520, y=180)
+
+    # =================Labels and Entry widgets for admin form=================
+
+    admin_user_logo = Label(admin_frame, image=admin_main_logo, bg="white").grid(row=2, columnspan=4)
+
+    # ====== text variables ========
+    temp_admin_id = StringVar()
+    temp_admin_password = StringVar()
+
+    admin_lbl_id = Label(admin_frame, text="ADMIN-ID:", image=log_user_img, compound=LEFT,
+                         font='comicsans 15 bold', bg="white").grid(row=3, column=0)
+    entry_admin_lbl_id = Entry(admin_frame, bd=5,textvariable = temp_admin_id, relief=SUNKEN, font="Lucida 20 bold").grid(row=3, column=1, padx=7,
+                                                                                             pady=4)
+
+    admin_lbl_password = Label(admin_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
+                               font='comicsans 15 bold', bg="white").grid(row=4, column=0, pady=2)
+    entry_admin_lbl_password = Entry(admin_frame, bd=5,textvariable = temp_admin_password, relief=SUNKEN, font="Lucida 20 bold").grid(row=4, column=1,
+                                                                                                   padx=7)
+
+    # ===================================Button for admin login==================
+
+    admin_button_login = Button(admin_frame, image=admin_login_button,command = admin_login, borderwidth=0, background="white")
+    admin_button_login.grid(row=5, columnspan=4)
+
+    # =======================creating back button to swith through frames=============================
+
+    frame3_btn = Button(page3, image=backbutton_img, borderwidth=0, background="yellow",
+                        command=lambda: show_frame(page1))
+    frame3_btn.place(x=10, y=8)
+
+    #=========================page 4 =====================================================
+    # def logout():
+    #     answer = tmsg.askyesno("Logout","ARE YOU SURE YOU WANT TO LEAVE!")
+    #     if answer == YES:
+    #         account_dashboard.destroy()
+
+
+    # page4_bgimg_label = Label(page4, image=bg_img)
+    # page4_bgimg_label.pack()
+    #
+    #
+    # title1 = Label(page4, text="Welcome to our page 4", font="Impact 45 ", bg="yellow", fg="orange", relief=SUNKEN,
+    #                borderwidth=8)
+    # title1.place(x=0, y=0, relwidth=1)  # relwidth is used to adjust text according to the window
+    # page4btn1 = Button(page4, text='Personal-Details', font='times 25', width=25, height=2).place(x=25, y=160)
+    # page4btn2 = Button(page4, text='Deposit', font='times 25', width=25, height=2).place(x=25, y=260)
+    # page4btn3 = Button(page4, text='Withdraw', font='times 25', width=25, height=2).place(x=25, y=360)
+    # page4btn4 = Button(page4, text='Check-Balance', font='times 25', width=25, height=2).place(x=25, y=460)
+    # logout_btn = Button(page4,text = 'Log-Out',font = 'times 25',command = logout, width = 25,height = 2).place(x= 25,y = 560)
+    # showvalues = Frame(page4,bg = "azure",width = 900 , height = 900)
+    # showvalues.place(x = 500,y = 100)
+
+
+
+    show_frame(page1)
+
+
+
+
+
+
+
+#================================================      MAIN GUI      ============================================
+def create_acc():
+
+    global namevalue,addressvalue,phonevalue,emailvalue,agevalue,adharcardvalue,passwordvalue,gendervalue,accountvalue
+    global datevalue,monthvalue,yearvalue
+    # ======================We created new window using toplevel function=====================
+    #new window name is register_screen
+    register_screen = Toplevel(root)
+    register_screen.geometry("750x600")
+    register_screen.title("CREATE ACCOUNT")
+    re_frame1 = Frame(register_screen,width = 700,height = 100,highlightbackground = 'grey',highlightthickness = 2,relief = SUNKEN,bg = "CadetBlue1")
+    Label(re_frame1,text = 'Get Your ONLINE-BANK Account in a few minutes with GROW-MORE.\n',font = 'comicsans 15 bold',bg = "CadetBlue1").place(x = 40,y = 20)
+    Label(re_frame1,text = 'With Grow-more we provide our best services and safety Banking for you '
+                           'your family.',font = ' comicsans 8 italic',bg = "CadetBlue1").place(x = 40 , y = 60)
+    re_frame1.pack(pady = 2,fill = X)
+    re_frame2 = Frame(register_screen, width=700, height=600, highlightbackground='grey', highlightthickness=2,
+                      relief=SUNKEN, bg="azure")
+
+    #=====================================combobox============================
+    mycombo = ttk.Combobox(register_screen,value = ls)
+    mycombo.current(0)
+    mycombo.bind("<<comboboxsselected>>",comboclick)
+    mycombo.place(x = 252,y = 187)
+
+
+    #=====================================Labels============================
+    Label(re_frame2, text='NAME:', font='comicsans 10 bold', bg="azure").place(x= 40,y=10)
+    Label(re_frame2, text='ADDRESS:', font='comicsans 10 bold', bg="azure").place(x=40, y=40)
+    Label(re_frame2, text='DISTRICT:', font='comicsans 10 bold', bg="azure").place(x=40, y=70)
+    Label(re_frame2, text='PHONE-NO:', font='comicsans 10 bold', bg="azure").place(x=40, y=100)
+    Label(re_frame2, text='GENDER:', font='comicsans 10 bold', bg="azure").place(x=40, y=130)
+    Label(re_frame2, text='DOB:', font='comicsans 10 bold', bg="azure").place(x=40, y=160)
+    Label(re_frame2, text='E-MAIL:', font='comicsans 10 bold', bg="azure").place(x=40, y=190)
+    Label(re_frame2, text='AGE:', font='comicsans 10 bold', bg="azure").place(x=40, y=220)
+    Label(re_frame2, text='ADHARCARD:', font='comicsans 10 bold', bg="azure").place(x=40, y=250)
+    Label(re_frame2, text='PASSWORD:', font='comicsans 10 bold', bg="azure").place(x=40, y=280)
+    Label(re_frame2, text='ACCOUNT-TYPE:', font='comicsans 10 bold', bg="azure").place(x=40, y=310)
+
+    #=====================================Entry box variables============================
+    namevalue = StringVar()
+    addressvalue = StringVar()
+    phonevalue = StringVar()
+    emailvalue = StringVar()
+    agevalue = StringVar()
+    adharcardvalue = StringVar()
+    passwordvalue = StringVar()
+    gendervalue = StringVar()
+    accountvalue = StringVar()
+    datevalue = StringVar()
+    monthvalue = StringVar()
+    yearvalue = StringVar()
+
+    #=====================================Entry box============================
+    Entry_name = Entry(re_frame2,textvariable =namevalue,font="comicsans 10 bold")
+    Entry_name.place(x=250,y= 10)
+    Entry_address = Entry (re_frame2,textvariable =addressvalue,font="comicsans 10 bold")
+    Entry_address.place(x=250,y= 40)
+    Entry_phone = Entry (re_frame2,textvariable =phonevalue,font="comicsans 10 bold")
+    Entry_phone.place(x=250,y= 100)
+    Entry_email = Entry (re_frame2, textvariable=emailvalue, font="comicsans 10 bold")
+    Entry_email.place(x=250,y= 190)
+    Entry_age = Entry (re_frame2,textvariable =agevalue,font="comicsans 10 bold")
+    Entry_age.place(x=250,y= 220)
+    Entry_adhar = Entry (re_frame2,textvariable =adharcardvalue,font="comicsans 10 bold")
+    Entry_adhar.place(x=250,y= 250)
+    Entry_password = Entry (re_frame2,textvariable =passwordvalue,show = "*",font="comicsans 10 bold")
+    Entry_password.place(x=250,y= 280)
+    Entry_date = Entry (re_frame2,textvariable = datevalue,font= 'Lucida 10 bold',width = 2)
+    Entry_date.place(x = 250,y = 160)  #dd
+    Entry_month = Entry (re_frame2,textvariable = monthvalue, font='Lucida 10 bold', width=2)
+    Entry_month.place(x=275, y=160)  #mm
+    Entry_year = Entry (re_frame2,textvariable = yearvalue, font='Lucida 10 bold', width=4)
+    Entry_year.place(x=300, y=160) #yy
+
+
+
+    gendervalue.set("male")
+    #=====================================Radio button for gender============================
+    r1 = Radiobutton(re_frame2,text = 'male', variable = gendervalue, value = "male", bg="azure")
+    r2 = Radiobutton(re_frame2,text = 'female',variable = gendervalue,value = "female", bg="azure")
+    r1.place(x = 249, y = 130)
+    r2.place(x = 320 , y = 130)
+
+    #=====================================Radio button for account type============================
+    accountvalue.set("saving")
+    r3 = Radiobutton(re_frame2,text = 'CURRENT', variable = accountvalue, value = "current", bg="azure")
+    r4 = Radiobutton(re_frame2,text = 'SAVING',variable = accountvalue,value = "saving", bg="azure")
+    r3.place(x = 249, y = 310)
+    r4.place(x = 350 , y = 310)
+
+    #
+    # Button(re_frame2, text="SUBMIT", font="comicsans 12",bg = "green",fg = "white",
+    #        width=20, command=submit).place(x=249, y=350)
+
+    Button(re_frame2, text="SUBMIT",command = submit, font="comicsans 12",bg = "green",fg = "white",
+           width=20).place(x=249, y=350)
+
+    re_frame2.pack(fill = 'both')
+
+
+
+#==============================main window frame of the first page========================
+mframe1 = Frame (root,width = 700,height = 100,highlightbackground = 'grey',highlightthickness = 2,relief = SUNKEN,bg = "green")
+Label(mframe1,text = " Grow more ",font = 'Lucida 40 bold',bg = 'green',fg = 'white').place(x = 44,y = 10)
+Label(mframe1,text = " Since 1992 ",font = 'Lucida 10 bold',bg = 'green').place(x = 60,y = 70)
+mframe1.pack(padx = 20,pady = 5,fill = 'both')
+
+#=====================changing Image of main window=========================
+
+
+#=====================Image swaping ===================================
+#image Tk used to import jpg images in tk window
+img1=ImageTk.PhotoImage(Image.open("img1.jpg"))
+img1 = Image.open("img1.jpg")
+img1= img1.resize((400,300))
+img1 = ImageTk.PhotoImage(img1)
+
+
+img2=ImageTk.PhotoImage(Image.open("img2.png"))
+img2 = Image.open("img2.png")
+img2= img2.resize((400,300))
+img2 = ImageTk.PhotoImage(img2)
+
+img3=ImageTk.PhotoImage(Image.open("img3.png"))
+img3 = Image.open("img3.png")
+img3= img3.resize((400,300))
+img3 = ImageTk.PhotoImage(img3)
+
+#Create a label
+l=Label(root,font="bold")
+l.pack()
+#take a variable
+x=1
+#create a function for moving a picture
+def move():#name anything but meaningful
+    global x
+    if x==4:
+        x=0
+    if x==1:
+        l.config(image=img1)#by writing this line first picture will appear
+    elif x==2:
+        l.config(image=img2)
+    elif x==3:
+        l.config(image=img3)
+    #you can do it for thousands of images
+    #now increase the count by one
+    x+=1
+    #set images to work automatically by "after" feature in tkinter
+    #after view image one by one after the given time i.e 2000 mil sec.
+    root.after(2000,move)
+move()
+
+#=============================main window buttons ========================================
+Button(root,text = 'Create Account',bg = 'yellow green',command = create_acc).place(x = 100,y = 434)
+Button(root,text = 'Log-In',bg = 'yellow green',command = log_in).place(x = 230,y = 434)
+
+
+
+
+root.mainloop()
