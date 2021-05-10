@@ -163,23 +163,30 @@ def isValidEmail(user_email):
 
 #==================admin show details function=====================
 def open_admin_file():
+    global showvalues_admin
+    global my_text
+    showvalues_admin = Frame(admin_account, bg="gray98", width=900, height=800)
+    showvalues_admin.place(x=500, y=100)
+
+    my_text = Text(showvalues_admin, width=100, height=100, font='times 25')
+    my_text.grid(row=3, column=1)
     text_file = filedialog.askopenfilename(initialdir = "C:\\Users\Yash\Desktop\Python\Apsit_project\\Users",
                                            title = "open user account",filetypes = ((("All files"),'*'),))
     text_file = open(text_file,'r')
     stuff = text_file.read()
+    my_text.insert(END, stuff)
 
-    my_text.insert(END,stuff)
-    text_file.close()
-    ent1.destroy()
-    del_button.destroy()
-    browse_button.destroy()
 
 
 def deleteUser():
     global ent1,del_button,browse_button
-    my_text.destroy()
+    # my_text.destroy()
 
-    ent1 = Entry(showvalues_admin, font='calibri 15',width = 55)
+    new_showvalues_admin = Frame(admin_account, bg="gray98", width=900, height=800)
+    new_showvalues_admin.place(x=500, y=100)
+
+
+    ent1 = Entry(new_showvalues_admin, font='calibri 15',width = 55)
     ent1.place(x=230, y=250)
 
 
@@ -192,9 +199,9 @@ def deleteUser():
 
             tmsg.showinfo("Done!","File removed successfully")
 
-    del_button = Button(showvalues_admin,text = 'Delete',command = removeUser,width=20,borderwidth = 5).place(x = 300,y = 500)
+    del_button = Button(new_showvalues_admin,text = 'Delete',command = removeUser,width=20,borderwidth = 5).place(x = 300,y = 500)
 
-    browse_button = Button(showvalues_admin,text = "Browse", font="comicsans 12",width=20,
+    browse_button = Button(new_showvalues_admin,text = "Browse", font="comicsans 12",width=20,
            borderwidth=5, relief=RAISED,command = browsefunc).place(x = 300,y = 200)
 
 
@@ -234,7 +241,7 @@ def log_in():
 
     def admin_login():
         global my_text
-        global showvalues_admin
+        global admin_account
         # ============================================Creating admin validations ==========================================
         if temp_admin_id.get() == "" or temp_admin_password.get() == "":
             tmsg.showerror("Error!", "All fields are required.")
@@ -262,13 +269,6 @@ def log_in():
             admin_logout_btn = Button(admin_dashboard_frame_btn, text='Log-Out', font='times 25', width=25, height=2,
                                       relief="ridge", borderwidth=8,command = admin_logout).grid(row=2, column=0, pady=1)
 
-
-            showvalues_admin = Frame(admin_account, bg="gray98", width=900, height=800)
-            showvalues_admin.place(x=500, y=100)
-
-
-            my_text = Text(showvalues_admin,width = 100,height = 100,font = 'times 25')
-            my_text.grid(row = 3,column = 1)
 
         else:
             tmsg.showerror("Error!", "Invalid Username or Password")
@@ -592,7 +592,7 @@ def log_in():
 
     pass_lbl = Label(Login_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
                      font='comicsans 15 bold', bg="white").grid(row=3, column=0, pady=5)
-    txtpass = Entry(Login_frame, bd=5, relief=SUNKEN, textvariable=temp_user_password, font="Lucida 20 bold").grid(
+    txtpass = Entry(Login_frame, bd=5, relief=SUNKEN, textvariable=temp_user_password, font="Lucida 20 bold",show = "*").grid(
         row=3, column=2, padx=10)
 
     # ========================Buttons=========================================
@@ -649,7 +649,7 @@ def log_in():
     admin_lbl_password = Label(admin_frame, text="PASSWORD:", image=pass_lock_img, compound=LEFT,
                                font='comicsans 15 bold', bg="white").grid(row=4, column=0, pady=2)
     entry_admin_lbl_password = Entry(admin_frame, bd=5, textvariable=temp_admin_password, relief=SUNKEN,
-                                     font="Lucida 20 bold").grid(row=4, column=1, padx=7)
+                                     font="Lucida 20 bold",show = "*").grid(row=4, column=1, padx=7)
 
     # ===================================Button for admin login==================
 
